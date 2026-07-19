@@ -34,50 +34,49 @@ export function EvalBar({ score, isMate, boardOrientation }: EvalBarProps) {
 
   return (
     <div
-      className="w-5 h-full rounded-full overflow-hidden flex flex-col relative"
+      className="w-5 h-full relative"
       role="meter"
       aria-label={`Evaluation: ${formatEval()}`}
       aria-valuenow={score}
       aria-valuemin={-10}
       aria-valuemax={10}
-      style={{
-        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)',
-      }}
     >
-      {/* Top Section */}
-      <motion.div
-        className="w-full"
-        animate={{
-          height: `${isWhiteBottom ? (100 - whitePercent) : whitePercent}%`,
-        }}
-        transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+      {/* Colored bar container */}
+      <div
+        className="absolute inset-0 rounded-full overflow-hidden flex flex-col"
         style={{
-          backgroundColor: isWhiteBottom ? 'var(--color-eval-black)' : 'var(--color-eval-white)',
+          boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)',
         }}
-      />
-      {/* Bottom Section */}
-      <motion.div
-        className="w-full flex-1"
-        style={{
-          backgroundColor: isWhiteBottom ? 'var(--color-eval-white)' : 'var(--color-eval-black)',
-        }}
-      />
+      >
+        {/* Top Section */}
+        <motion.div
+          className="w-full"
+          animate={{
+            height: `${isWhiteBottom ? (100 - whitePercent) : whitePercent}%`,
+          }}
+          transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+          style={{
+            backgroundColor: isWhiteBottom ? 'var(--color-eval-black)' : 'var(--color-eval-white)',
+          }}
+        />
+        {/* Bottom Section */}
+        <motion.div
+          className="w-full flex-1"
+          style={{
+            backgroundColor: isWhiteBottom ? 'var(--color-eval-white)' : 'var(--color-eval-black)',
+          }}
+        />
+      </div>
 
-      {/* Floating eval label */}
+      {/* Floating eval label badge outside overflow-hidden to prevent clipping */}
       <motion.div
-        className="absolute left-0 right-0 flex items-center justify-center pointer-events-none"
+        className="absolute left-1/2 flex items-center justify-center pointer-events-none z-10"
         animate={{ top: `${clampedLabelPos}%` }}
         transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-        style={{ transform: 'translateY(-50%)' }}
+        style={{ transform: 'translate(-50%, -50%)' }}
       >
         <span
-          className="font-chess text-[9px] font-bold leading-none px-0.5 rounded-sm"
-          style={{
-            color: whitePercent > 50 ? 'var(--color-eval-black)' : 'var(--color-eval-white)',
-            textShadow: whitePercent > 50
-              ? '0 0 4px rgba(234,224,213,0.3)'
-              : '0 0 4px rgba(42,37,32,0.3)',
-          }}
+          className="font-chess text-[8px] font-bold leading-none px-1 py-0.5 rounded bg-[var(--color-bg-deep)] text-[var(--color-text)] border border-[rgba(255,255,255,0.12)] shadow-sm whitespace-nowrap"
         >
           {formatEval()}
         </span>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Chess } from 'chess.js';
 import { useChessGame } from './useChessGame';
 import { useSound } from './useSound';
@@ -25,7 +25,7 @@ export function useChessAppState() {
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [sidebarTab, setSidebarTab] = useState('settings');
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark' | 'amoled'>('dark');
 
   const { fen, turn, isGameOver, makeMove, history, undo, redo, redoStack, reset } = game;
   const { playSound } = useSound(soundEnabled);
@@ -89,6 +89,7 @@ export function useChessAppState() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('light', theme === 'light');
+    document.documentElement.classList.toggle('amoled', theme === 'amoled');
   }, [theme]);
 
   useEffect(() => {
@@ -104,6 +105,29 @@ export function useChessAppState() {
       playSound('move');
     }
   }, [fen, history, isGameOver, game.game, playSound]);
+
+  // Sound effects for review mode navigation
+  const prevReviewIndex = useRef(reviewIndex);
+  useEffect(() => {
+    if (!reviewMode || reviewIndex === prevReviewIndex.current) {
+      prevReviewIndex.current = reviewIndex;
+      return;
+    }
+
+    if (reviewIndex === 0) {
+      playSound('move');
+    } else {
+      const move = history[reviewIndex - 1];
+      if (move) {
+        if (move.flags.includes('c') || move.flags.includes('e')) {
+          playSound('capture');
+        } else {
+          playSound('move');
+        }
+      }
+    }
+    prevReviewIndex.current = reviewIndex;
+  }, [reviewMode, reviewIndex, history, playSound]);
 
   useEffect(() => {
     reset();

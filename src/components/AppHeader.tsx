@@ -1,8 +1,8 @@
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Zap } from 'lucide-react';
 
 interface AppHeaderProps {
   statusText: string;
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'amoled';
   onToggleTheme: () => void;
 }
 
@@ -19,11 +19,13 @@ export function AppHeader({ statusText, theme, onToggleTheme }: AppHeaderProps) 
       </div>
       <button
         onClick={onToggleTheme}
-        className="p-2 rounded-xl bg-surface hover:bg-surface-hover text-text-muted hover:text-text transition-colors border border-border"
-        aria-label="Toggle theme"
+        className="p-2 rounded-xl bg-surface hover:bg-surface-hover text-text-muted hover:text-text transition-colors border border-border cursor-pointer"
+        aria-label={`Toggle theme (current: ${theme})`}
         type="button"
       >
-        {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+        {theme === 'light' && <Moon size={18} />}
+        {theme === 'dark' && <Zap size={18} className="text-indigo-500 dark:text-indigo-400 animate-pulse" />}
+        {theme === 'amoled' && <Sun size={18} />}
       </button>
     </div>
   );

@@ -200,21 +200,23 @@ export function PlayerBar({
       <div className="flex items-center gap-2 flex-shrink-0">
         {sortedCaptures.length > 0 && (
           <div className="flex items-center -space-x-0.5" aria-hidden="true">
-            {sortedCaptures.map((piece, i) => (
-              <span
-                key={`${piece}-${i}`}
-                className="text-base leading-none opacity-80"
-                style={{
-                  color: color === 'w' ? 'rgba(0,0,0,0.65)' : 'rgba(255,255,255,0.65)',
-                  textShadow:
-                    color === 'w'
-                      ? '0 0 2px rgba(0,0,0,0.1)'
-                      : '0 0 2px rgba(255,255,255,0.15)',
-                }}
-              >
-                {PIECE_SYMBOLS[piece] ?? piece}
-              </span>
-            ))}
+            {sortedCaptures.map((piece, i) => {
+              const isWhitePiece = color === 'b';
+              const fill = isWhitePiece ? 'var(--color-captured-white)' : 'var(--color-captured-black)';
+              const stroke = isWhitePiece ? 'var(--stroke-captured-white)' : 'var(--stroke-captured-black)';
+              return (
+                <span
+                  key={`${piece}-${i}`}
+                  className="text-base leading-none"
+                  style={{
+                    color: fill,
+                    textShadow: `-0.75px -0.75px 0 ${stroke}, 0.75px -0.75px 0 ${stroke}, -0.75px 0.75px 0 ${stroke}, 0.75px 0.75px 0 ${stroke}`,
+                  }}
+                >
+                  {PIECE_SYMBOLS[piece] ?? piece}
+                </span>
+              );
+            })}
           </div>
         )}
 

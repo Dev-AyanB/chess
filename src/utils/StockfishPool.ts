@@ -66,7 +66,7 @@ class StockfishPool {
           latestIsMate = false;
         } else if (mateMatch) {
           const mate = parseInt(mateMatch[1], 10);
-          latestScore = mate > 0 ? (100 - mate) : (-100 - mate);
+          latestScore = mate;
           if (isBlackTurn) latestScore = -latestScore;
           latestIsMate = true;
         }

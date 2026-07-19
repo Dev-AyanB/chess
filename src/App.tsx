@@ -142,9 +142,11 @@ function App() {
           />
 
           <div className="flex-1 flex gap-2 min-h-0">
-            <div className="hidden sm:flex shrink-0 py-1">
-              <EvalBar score={evalState.score} isMate={evalState.isMate} boardOrientation={visualBoardOrientation} />
-            </div>
+            {reviewMode && (
+              <div className="hidden sm:flex shrink-0 py-1">
+                <EvalBar score={evalState.score} isMate={evalState.isMate} boardOrientation={visualBoardOrientation} />
+              </div>
+            )}
             <div className="flex-1 relative flex justify-center h-full max-h-full">
               <div className="aspect-square h-full">
                 <ChessBoard
@@ -198,7 +200,11 @@ function App() {
         <AppHeader
           statusText={statusText}
           theme={theme}
-          onToggleTheme={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+          onToggleTheme={() => setTheme(t => {
+            if (t === 'light') return 'dark';
+            if (t === 'dark') return 'amoled';
+            return 'light';
+          })}
         />
 
         <div className="flex-1 min-h-0">

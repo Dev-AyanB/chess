@@ -2,44 +2,50 @@
 @import "tailwindcss";
 
 @theme {
-  /* Board Colors */
-  --color-board-light: #e8d5b5;
-  --color-board-dark: #b08968;
+  /* Refined Board Colors (Modern Green/Cream for optimal readability) */
+  --color-board-light: #ececd7;
+  --color-board-dark: #739552;
 
-  /* Layered Background System (deep → surface) */
-  --color-bg-deep: #060a13;
-  --color-bg: #0c1220;
-  --color-bg-elevated: #141e30;
-  --color-surface: #1c2840;
-  --color-surface-hover: #243352;
+  /* Refined Slate-based Layered Background System (Dark Theme) */
+  --color-bg-deep: #0b0f19;       /* Deep slate-black */
+  --color-bg: #111827;            /* Slate 900 */
+  --color-bg-elevated: #1f2937;   /* Slate 800 */
+  --color-surface: #374151;       /* Slate 700 */
+  --color-surface-hover: #4b5563; /* Slate 600 */
 
   /* Accent System */
-  --color-accent: #7c6aef;
-  --color-accent-hover: #6554d4;
-  --color-accent-glow: rgba(124, 106, 239, 0.2);
-  --color-accent-subtle: rgba(124, 106, 239, 0.08);
-  --color-primary: #7c6aef;
+  --color-accent: #6366f1;        /* Indigo 500 (more vibrant and premium) */
+  --color-accent-hover: #4f46e5;  /* Indigo 600 */
+  --color-accent-glow: rgba(99, 102, 241, 0.15);
+  --color-accent-subtle: rgba(99, 102, 241, 0.08);
+  --color-primary: #6366f1;
 
-  /* Text Hierarchy */
-  --color-text: #f0f2f5;
-  --color-text-muted: #8b95a8;
-  --color-text-tertiary: #4e5a6e;
+  /* Accessible Text Hierarchy (Dark Theme) */
+  --color-text: #f9fafb;          /* Slate 50 - High contrast */
+  --color-text-muted: #9ca3af;    /* Slate 400 - High contrast secondary text (AA compliant) */
+  --color-text-tertiary: #6b7280; /* Slate 500 - Auxiliary text */
 
   /* Border */
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-subtle: rgba(255, 255, 255, 0.03);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
 
-  /* Semantic — Move Classifications */
-  --color-best: #22c55e;
-  --color-excellent: #34d399;
-  --color-good: #60a5fa;
-  --color-inaccuracy: #fbbf24;
-  --color-mistake: #f97316;
-  --color-blunder: #ef4444;
+  /* Refined Move Classifications (Slightly darker for better contrast in light mode) */
+  --color-best: #16a34a;          /* Green 600 */
+  --color-excellent: #0d9488;     /* Teal 600 */
+  --color-good: #2563eb;          /* Blue 600 */
+  --color-inaccuracy: #d97706;     /* Amber 600 */
+  --color-mistake: #ea580c;        /* Orange 600 */
+  --color-blunder: #dc2626;        /* Red 600 */
 
   /* Eval Bar */
-  --color-eval-white: #EAE0D5;
-  --color-eval-black: #2a2520;
+  --color-eval-white: #f3f4f6;    /* Soft grey-white */
+  --color-eval-black: #1f2937;    /* Slate 800 */
+
+  /* Captured Pieces */
+  --color-captured-white: #f3f4f6;
+  --color-captured-black: #111827;
+  --stroke-captured-white: #111827;
+  --stroke-captured-black: #9ca3af;
 }
 
 @layer base {
@@ -51,17 +57,54 @@
 
   :root.light {
     color-scheme: light;
-    --background: #f4f6f9;
-    --foreground: #0c1220;
-    --color-bg: #f4f6f9;
-    --color-bg-elevated: #ffffff;
-    --color-surface: #edf0f5;
-    --color-surface-hover: #dfe3ea;
-    --color-text: #0c1220;
-    --color-text-muted: #64748b;
-    --color-text-tertiary: #94a3b8;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --color-border-subtle: rgba(0, 0, 0, 0.04);
+    --background: #f8fafc;          /* Slate 50 - Crisp, clean light background */
+    --foreground: #0f172a;          /* Slate 900 - High contrast text */
+    --color-bg-deep: #f8fafc;
+    --color-bg: #ffffff;            /* Pure White cards */
+    --color-bg-elevated: #f1f5f9;   /* Slate 100 elevated sections */
+    --color-surface: #e2e8f0;       /* Slate 200 elements */
+    --color-surface-hover: #cbd5e1; /* Slate 300 elements hover */
+    --color-text: #0f172a;          /* Slate 900 */
+    --color-text-muted: #475569;    /* Slate 600 - High contrast secondary text (AA) */
+    --color-text-tertiary: #64748b; /* Slate 500 */
+    --color-border: rgba(15, 23, 42, 0.08); /* Clean, crisp border */
+    --color-border-subtle: rgba(15, 23, 42, 0.04);
+
+    /* Refined Move Classifications (Darker / higher contrast for light theme) */
+    --color-best: #15803d;          /* Green 700 */
+    --color-excellent: #0f766e;     /* Teal 700 */
+    --color-good: #1d4ed8;          /* Blue 700 */
+    --color-inaccuracy: #b45309;     /* Amber 700 */
+    --color-mistake: #c2410c;        /* Orange 700 */
+    --color-blunder: #b91c1c;        /* Red 700 */
+
+    /* Captured Pieces Light Theme overrides */
+    --color-captured-white: #ffffff;
+    --color-captured-black: #0f172a;
+    --stroke-captured-white: #475569;
+    --stroke-captured-black: #e2e8f0;
+  }
+
+  :root.amoled {
+    color-scheme: dark;
+    --background: #000000;
+    --foreground: #f9fafb;
+    --color-bg-deep: #000000;       /* Pure black background */
+    --color-bg: #000000;            /* Pure black cards */
+    --color-bg-elevated: #090e18;   /* Slightly off-black for inner cards */
+    --color-surface: #161e2e;       /* Slate 800-like surface */
+    --color-surface-hover: #243049; /* Slate 700-like hover surface */
+    --color-text: #f9fafb;
+    --color-text-muted: #9ca3af;
+    --color-text-tertiary: #6b7280;
+    --color-border: rgba(255, 255, 255, 0.12); /* Slightly higher visibility border */
+    --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+    /* Captured Pieces overrides for AMOLED */
+    --color-captured-white: #f3f4f6;
+    --color-captured-black: #000000;
+    --stroke-captured-white: #000000;
+    --stroke-captured-black: #9ca3af;
   }
 
   * {
@@ -118,6 +161,17 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-border-subtle);
+  }
+
+  :root.amoled .glass {
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+
+  :root.amoled .glass-subtle {
+    background: rgba(0, 0, 0, 0.5);
   }
 
   /* Active turn glow */
