@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Board Colors */
+  --color-board-light: #e8d5b5;
+  --color-board-dark: #b08968;
+
+  /* Layered Background System (deep → surface) */
+  --color-bg-deep: #060a13;
+  --color-bg: #0c1220;
+  --color-bg-elevated: #141e30;
+  --color-surface: #1c2840;
+  --color-surface-hover: #243352;
+
+  /* Accent System */
+  --color-accent: #7c6aef;
+  --color-accent-hover: #6554d4;
+  --color-accent-glow: rgba(124, 106, 239, 0.2);
+  --color-accent-subtle: rgba(124, 106, 239, 0.08);
+  --color-primary: #7c6aef;
+
+  /* Text Hierarchy */
+  --color-text: #f0f2f5;
+  --color-text-muted: #8b95a8;
+  --color-text-tertiary: #4e5a6e;
+
+  /* Border */
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.03);
+
+  /* Semantic — Move Classifications */
+  --color-best: #22c55e;
+  --color-excellent: #34d399;
+  --color-good: #60a5fa;
+  --color-inaccuracy: #fbbf24;
+  --color-mistake: #f97316;
+  --color-blunder: #ef4444;
+
+  /* Eval Bar */
+  --color-eval-white: #EAE0D5;
+  --color-eval-black: #2a2520;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --background: var(--color-bg);
+    --foreground: var(--color-text);
+  }
+
+  :root.light {
+    color-scheme: light;
+    --background: #f4f6f9;
+    --foreground: #0c1220;
+    --color-bg: #f4f6f9;
+    --color-bg-elevated: #ffffff;
+    --color-surface: #edf0f5;
+    --color-surface-hover: #dfe3ea;
+    --color-text: #0c1220;
+    --color-text-muted: #64748b;
+    --color-text-tertiary: #94a3b8;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-subtle: rgba(0, 0, 0, 0.04);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--color-bg-deep);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Custom Scrollbar — WebKit */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface);
+    border-radius: 20px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--color-text-tertiary);
+  }
+
+  /* Custom Scrollbar — Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-surface) transparent;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism */
+  .glass {
+    background: rgba(20, 30, 48, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .glass-subtle {
+    background: rgba(20, 30, 48, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  /* Active turn glow */
+  .turn-glow {
+    box-shadow:
+      0 0 0 1px var(--color-accent),
+      0 0 20px var(--color-accent-glow),
+      0 0 40px rgba(124, 106, 239, 0.08);
+  }
+
+  /* Monospace utility for chess notation */
+  .font-chess {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  }
+
+  /* Breathing pulse for active player */
+  @keyframes breathe {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .animate-breathe {
+    animation: breathe 2.5s ease-in-out infinite;
+  }
+
+  /* Fade in up */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.3s ease-out forwards;
+  }
+
+  /* Pop in for badges */
+  @keyframes popIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .animate-pop-in {
+    animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Shimmer for loading states */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.05) 50%, transparent 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+}
